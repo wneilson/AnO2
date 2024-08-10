@@ -22,6 +22,14 @@
                   "url": "ano2_files/EAM_equil_avg.lmpin"
               },
               {
+                  "fileName": "UO2-single_cell.lmpstruct",
+                  "url": "ano2_files/UO2-single_cell.lmpstruct"
+              },
+              {
+                  "fileName": "CeThUNpPuAmCmO.eam.alloy",
+                  "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"
+              },
+              {
                 "fileName": "2d-msd-diffusion.ipynb",
                 "url": "2d-msd-diffusion/2d-msd-diffusion.ipynb"
             }
