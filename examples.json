@@ -10,7 +10,7 @@
           "analysisDescription": "# About this simulation\nWe search for geometry of lattice at given conditions.",
           "analysisScript": "AnO2.ipynb",
           "imageUrl": "2d-msd-diffusion/2d-msd-diffusion.png",
-          "inputScript": "2d-msd-diffusion.in",
+          "inputScript": "EAM_equil_avg.lmpin",
           "keywords": [
               "lattice",
               "cubic"
@@ -18,8 +18,8 @@
           ],
           "files": [
               {
-                  "fileName": "2d-msd-diffusion.in",
-                  "url": "2d-msd-diffusion/2d-msd-diffusion.in"
+                  "fileName": "EAM_equil_avg.lmpin",
+                  "url": "ano2_files/EAM_equil_avg.lmpin"
               },
               {
                 "fileName": "2d-msd-diffusion.ipynb",
