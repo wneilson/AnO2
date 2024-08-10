@@ -1,6 +1,6 @@
 {
-  "baseUrl": "https://raw.githubusercontent.com/andeplane/atomify-examples-template/main",
-  "title": "Diffusion examples",
+  "baseUrl": "https://raw.githubusercontent.com/wneilson/AnO2/main",
+  "title": "AnO2 lattice relaxation",
   "descriptionFile": "description.md",
   "examples": [
       {
