@@ -1,3 +1,9 @@
+#/atom 1 uranium
+#/atom 2 oxygen
+
+#/camera position 1.9 5.8 25.2
+#/camera target 3.5 4.5 17.9
+
 # set periodic boundaries, units and thero-baro damping
 boundary p p p
 atom_style full
@@ -32,7 +38,7 @@ minimize 1.0e-25 1.0e-25 10000 10000
 unfix boxrelax_fix
 
 # Create 4x4x4 supercell containing 768 atoms
-replicate 4 4 4
+replicate 2 2 2
 
 # create initial velocities and set timestep
 velocity all create 300 160278
@@ -45,8 +51,6 @@ thermo_style custom step temp press etotal lx cella cellb cellc cellalpha cellbe
 thermo 50
 
 neigh_modify delay 0 every 1 check yes
-dump cfg_dump all cfg 100 addatom_*.cfg.gz mass type xs ys zs vx vy vz
-dump_modify cfg_dump sort id element O U
 
 # equilibrate for 20ps
 run 10000
