@@ -1,5 +1,5 @@
 {
-  "baseUrl": https://raw.githubusercontent.com/wneilson/AnO2/main/examples.json",
+  "baseUrl": "https://raw.githubusercontent.com/wneilson/AnO2/main/examples.json",
   "title": "AnO2 lattice relaxation",
   "descriptionFile": "description.md",
   "examples": [
