@@ -8,8 +8,7 @@
           "title": "AnO2 lattice relaxation",
           "description": "We search for geometry of lattice at given conditions.",
           "analysisDescription": "# About this simulation\nWe search for geometry of lattice at given conditions.",
-          "analysisScript": "AnO2.ipynb",
-          "imageUrl": "2d-msd-diffusion/2d-msd-diffusion.png",
+          "imageUrl": "ano2_files/ano2atomify.png",
           "inputScript": "EAM_equil_avg.lmpin",
           "keywords": [
               "lattice",
