@@ -29,8 +29,8 @@
       },
       {
         "id": "2d-vacf-diffusion",
-        "title": "2D diffusion VACF",
-        "description": "We measure the diffusion coefficient using the velocity auto correlation function.",
+        "title": "yyyyy",
+        "description": "xxxx",
         "analysisDescription": "# About this simulation\nWe measure the diffusion coefficient using the velocity auto correlation function.",
         "analysisScript": "2d-msd-diffusion.ipynb",
         "imageUrl": "2d-vacf-diffusion/2d-vacf-diffusion.png",
