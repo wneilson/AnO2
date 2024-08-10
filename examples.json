@@ -4,17 +4,17 @@
   "descriptionFile": "description.md",
   "examples": [
       {
-          "id": "2d-msd-diffusion",
-          "title": "2zzzzz",
-          "description": "We measure the diffusion coefficient using the mean square displacement.",
-          "analysisDescription": "# About this simulation\nWe measure the diffusion coefficient using the mean square displacement.",
-          "analysisScript": "2d-msd-diffusion.ipynb",
+          "id": "AnO2",
+          "title": "AnO2 lattice relaxation",
+          "description": "We search for geometry of lattice at given conditions.",
+          "analysisDescription": "# About this simulation\nWe search for geometry of lattice at given conditions.",
+          "analysisScript": "AnO2.ipynb",
           "imageUrl": "2d-msd-diffusion/2d-msd-diffusion.png",
           "inputScript": "2d-msd-diffusion.in",
           "keywords": [
-              "lennard jones",
-              "diffusion",
-              "mean square displacement"
+              "lattice",
+              "cubic",
+              
           ],
           "files": [
               {
