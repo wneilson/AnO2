@@ -1,0 +1,85 @@
+# set periodic boundaries, units and thero-baro damping
+boundary p p p
+atom_style full
+units metal
+variable THERMO_DAMP equal 0.1
+variable BARO_DAMP equal 0.5
+variable T equal temp
+# import UO2 single cell fluorite structure and assign atom labels
+read_data UO2-single_cell.lmpstruct
+variable O equal 1
+variable U equal 2
+
+# set charges
+set type $O charge -1.1104
+set type $U charge 2.2208
+
+# define interatomic potential via coulombic and embed_UO2.fs tabulation 
+kspace_style pppm 1.0e-5
+variable SR_CUTOFF equal 11.0
+pair_style hybrid/overlay coul/long ${SR_CUTOFF} eam/alloy
+pair_coeff   *    *    coul/long
+pair_coeff   *    *    eam/alloy CeThUNpPuAmCmO.eam.alloy O U
+
+#Perform minimization
+fix boxrelax_fix all box/relax aniso 0.0 vmax 0.001
+thermo 1
+thermo_style custom step temp press etotal lx cella cellb cellc cellalpha cellbeta cellgamma
+min_style sd
+min_modify line quadratic dmax 0.05
+minimize 1.0e-25 1.0e-25 10000 10000
+
+unfix boxrelax_fix
+
+# Create 4x4x4 supercell containing 768 atoms
+replicate 4 4 4
+
+# create initial velocities and set timestep
+velocity all create 300 160278
+timestep 0.002
+
+# Set-up thermostat
+fix thermostat_fix all npt temp 300 1000 ${THERMO_DAMP} aniso 0.0 0.0 ${BARO_DAMP}
+
+thermo_style custom step temp press etotal lx cella cellb cellc cellalpha cellbeta cellgamma
+thermo 50
+
+neigh_modify delay 0 every 1 check yes
+dump cfg_dump all cfg 100 addatom_*.cfg.gz mass type xs ys zs vx vy vz
+dump_modify cfg_dump sort id element O U
+
+# equilibrate for 20ps
+run 10000
+unfix thermostat_fix
+
+
+fix thermostat_fix all npt temp 1000 1000 ${THERMO_DAMP} aniso 0.0 0.0 ${BARO_DAMP}
+
+  # Average over final 4ps
+  variable AVE_START equal step
+  variable V equal vol
+  variable En equal enthalpy
+  variable LX equal lx
+  variable LY equal ly
+  variable LZ equal lz
+  fix avg_T_fix all ave/time 1 1000 1000 c_thermo_temp start ${AVE_START} file test_T.log
+  fix avg_V_fix all ave/time 1 1000 1000 v_V start ${AVE_START}
+  fix avg_P_fix all ave/time 1 1000 1000 c_thermo_press start ${AVE_START}
+  fix avg_En_fix all ave/time 1 1000 1000 v_En start ${AVE_START}
+  fix avg_LX_fix all ave/time 1 1000 1000 v_LX start ${AVE_START}
+  fix avg_LY_fix all ave/time 1 1000 1000 v_LY start ${AVE_START}
+  fix avg_LZ_fix all ave/time 1 1000 1000 v_LZ start ${AVE_START}
+  
+  # equilibrate for 20ps
+  run 10000
+
+  variable AVG_T equal f_avg_T_fix
+  variable AVG_V equal f_avg_V_fix
+  variable AVG_P equal f_avg_P_fix
+  variable AVG_En equal f_avg_En_fix
+  variable AVG_LX equal f_avg_LX_fix
+  variable AVG_LY equal f_avg_LY_fix
+  variable AVG_LZ equal f_avg_LZ_fix
+  print "OUTPUT:${T}:${AVG_T}:${AVG_V}:${AVG_P}:${AVG_En}:${AVG_LX}:${AVG_LY}:${AVG_LZ}"
+
+
