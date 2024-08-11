@@ -83,6 +83,7 @@ fix thermostat_fix all npt temp 1000 1000 ${THERMO_DAMP} aniso 0.0 0.0 ${BARO_DA
   variable AVG_LX equal f_avg_LX_fix
   variable AVG_LY equal f_avg_LY_fix
   variable AVG_LZ equal f_avg_LZ_fix
+  print "OUTPUT:T:AVG_T:AVG_V:AVG_P:AVG_En:AVG_LX:AVG_LY:AVG_LZ"
   print "OUTPUT:${T}:${AVG_T}:${AVG_V}:${AVG_P}:${AVG_En}:${AVG_LX}:${AVG_LY}:${AVG_LZ}"
 
 
