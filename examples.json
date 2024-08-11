@@ -37,7 +37,7 @@
     {
           "id": "AnO2_supercell",
           "title": "AnO2 supercell",
-          "description": "Supercell enabling calcualtion of defect energies",
+          "description": "Supercell enabling calculation of defect energies",
           "analysisDescription": "# About this simulation\nWe search for geometry of lattice at given conditions.",
           "imageUrl": "ano2_files/ano2atomify.png",
           "inputScript": "EAM_equil_avg.lmpin",
