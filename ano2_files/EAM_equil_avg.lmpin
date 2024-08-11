@@ -37,7 +37,7 @@ minimize 1.0e-25 1.0e-25 10000 10000
 
 unfix boxrelax_fix
 
-# Create 4x4x4 supercell containing 768 atoms
+# Create 2x2x2 supercell containing 96 atoms
 replicate 2 2 2
 
 # create initial velocities and set timestep
@@ -52,10 +52,9 @@ thermo 50
 
 neigh_modify delay 0 every 1 check yes
 
-# equilibrate for 20ps
-run 10000
+# equilibrate for 10ps
+run 5000
 unfix thermostat_fix
-
 
 fix thermostat_fix all npt temp 1000 1000 ${THERMO_DAMP} aniso 0.0 0.0 ${BARO_DAMP}
 
@@ -74,8 +73,8 @@ fix thermostat_fix all npt temp 1000 1000 ${THERMO_DAMP} aniso 0.0 0.0 ${BARO_DA
   fix avg_LY_fix all ave/time 1 1000 1000 v_LY start ${AVE_START}
   fix avg_LZ_fix all ave/time 1 1000 1000 v_LZ start ${AVE_START}
   
-  # equilibrate for 20ps
-  run 10000
+  # equilibrate for 10ps
+  run 5000
 
   variable AVG_T equal f_avg_T_fix
   variable AVG_V equal f_avg_V_fix
