@@ -40,7 +40,7 @@
           "description": "Supercell enabling calculation of defect energies",
           "analysisDescription": "# About this simulation\nWe search for geometry of lattice at given conditions.",
           "imageUrl": "ano2_files/ano2atomify.png",
-          "inputScript": "EAM_equil_avg.lmpin",
+          "inputScript": "EAM_defect.lmpin",
           "keywords": [
               "lattice",
               "cubic"
@@ -48,8 +48,8 @@
           ],
           "files": [
               {
-                  "fileName": "EAM_equil_avg.lmpin",
-                  "url": "ano2_files/EAM_equil_avg.lmpin"
+                  "fileName": "EAM_defect.lmpin",
+                  "url": "ano2_files/EAM_defect.lmpin"
               },
               {
                   "fileName": "UO2-single_cell.lmpstruct",
