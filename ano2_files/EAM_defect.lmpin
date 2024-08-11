@@ -12,7 +12,7 @@ variable THERMO_DAMP equal 0.1
 variable BARO_DAMP equal 0.5
 variable T equal temp
 # import UO2 single cell fluorite structure and assign atom labels
-read_data UO2-single_cell.lmpstruct
+read_data AnO2-single_cell.lmpstruct
 variable O equal 1
 variable U equal 2
 
