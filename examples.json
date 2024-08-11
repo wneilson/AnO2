@@ -21,8 +21,8 @@
                   "url": "ano2_files/EAM_equil_avg.lmpin"
               },
               {
-                  "fileName": "UO2-single_cell.lmpstruct",
-                  "url": "ano2_files/UO2-single_cell.lmpstruct"
+                  "fileName": "AnO2-single_cell.lmpstruct",
+                  "url": "ano2_files/AnO2-single_cell.lmpstruct"
               },
               {
                   "fileName": "CeThUNpPuAmCmO.eam.alloy",
@@ -52,8 +52,8 @@
                   "url": "ano2_files/EAM_defect.lmpin"
               },
               {
-                  "fileName": "UO2-single_cell.lmpstruct",
-                  "url": "ano2_files/UO2-single_cell.lmpstruct"
+                  "fileName": "AnO2-single_cell.lmpstruct",
+                  "url": "ano2_files/AnO2-single_cell.lmpstruct"
               },
               {
                   "fileName": "CeThUNpPuAmCmO.eam.alloy",
