@@ -1,0 +1,55 @@
+#/atom 1 uranium
+#/atom 2 oxygen
+
+#/camera position 1.9 5.8 25.2
+#/camera target 3.5 4.5 17.9
+
+# set periodic boundaries, units and thero-baro damping
+boundary p p p
+atom_style full
+units metal
+variable THERMO_DAMP equal 0.1
+variable BARO_DAMP equal 0.5
+variable T equal temp
+# import UO2 single cell fluorite structure and assign atom labels
+read_data UO2-single_cell.lmpstruct
+variable O equal 1
+variable U equal 2
+
+# set charges
+set type $O charge -1.1104
+set type $U charge 2.2208
+
+# define interatomic potential via coulombic and embed_UO2.fs tabulation 
+kspace_style pppm 1.0e-5
+variable SR_CUTOFF equal 11.0
+pair_style hybrid/overlay coul/long ${SR_CUTOFF} eam/alloy
+pair_coeff   *    *    coul/long
+pair_coeff   *    *    eam/alloy CeThUNpPuAmCmO.eam.alloy O U
+
+#Perform minimization
+fix boxrelax_fix all box/relax aniso 0.0 vmax 0.001
+thermo 1
+thermo_style custom step temp press etotal lx cella cellb cellc cellalpha cellbeta cellgamma
+min_style sd
+min_modify line quadratic dmax 0.05
+minimize 1.0e-25 1.0e-25 10000 10000
+
+unfix boxrelax_fix
+
+# Create 2x2x2 supercell containing 96 atoms
+replicate 2 2 2
+
+#region vacancy block -0.1 0.1 -0.1 0.1 -0.1 0.1
+#delete_atoms region vacancy
+
+#Perform minimization
+fix boxrelax_fix all box/relax aniso 0.0 vmax 0.001
+thermo 1
+thermo_style custom step temp press etotal lx cella cellb cellc cellalpha cellbeta cellgamma
+min_style sd
+min_modify line quadratic dmax 0.05
+minimize 1.0e-25 1.0e-25 10000 10000
+
+unfix boxrelax_fix
+
