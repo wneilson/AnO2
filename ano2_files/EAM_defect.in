@@ -1,5 +1,5 @@
-#/atom 1 uranium
-#/atom 2 oxygen
+#/atom 1 O
+#/atom 2 U
 
 #/camera position 1.9 5.8 25.2
 #/camera target 3.5 4.5 17.9
@@ -27,13 +27,17 @@ pair_style hybrid/overlay coul/long ${SR_CUTOFF} eam/alloy
 pair_coeff   *    *    coul/long
 pair_coeff   *    *    eam/alloy CeThUNpPuAmCmO.eam.alloy O U
 
-#Perform minimization
+# Perform minimization
 fix boxrelax_fix all box/relax aniso 0.0 vmax 0.001
+
 thermo 1
 thermo_style custom step temp press etotal lx cella cellb cellc cellalpha cellbeta cellgamma
-min_style sd
+
+min_style cg/kk
 min_modify line quadratic dmax 0.05
+
 minimize 1.0e-25 1.0e-25 10000 10000
 
 unfix boxrelax_fix
+
 
