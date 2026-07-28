@@ -31,7 +31,7 @@ pair_coeff   *    *    eam/alloy CeThUNpPuAmCmO.eam.alloy O U
 fix boxrelax_fix all box/relax aniso 0.0 vmax 0.001
 thermo 1
 thermo_style custom step temp press etotal lx cella cellb cellc cellalpha cellbeta cellgamma
-min_style sd
+min_style cg/kk
 min_modify line quadratic dmax 0.05
 minimize 1.0e-25 1.0e-25 10000 10000
 
