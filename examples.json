@@ -9,7 +9,7 @@
           "description": "Geometry relaxtaion of lattice at given conditions.",
           "analysisDescription": "# About this simulation\nWe search for geometry of lattice at given conditions.",
           "imageUrl": "ano2_files/ano2atomify.png",
-          "inputScript": "EAM_equil_avg.lmpin",
+          "inputScript": "EAM_equil_avg.in",
           "keywords": [
               "lattice",
               "cubic"
@@ -17,8 +17,8 @@
           ],
           "files": [
               {
-                  "fileName": "EAM_equil_avg.lmpin",
-                  "url": "ano2_files/EAM_equil_avg.lmpin"
+                  "fileName": "EAM_equil_avg.in",
+                  "url": "ano2_files/EAM_equil_avg.in"
               },
               {
                   "fileName": "AnO2-single_cell.lmpstruct",
@@ -36,7 +36,7 @@
           "description": "Supercell enabling calculation of defect energies",
           "analysisDescription": "# About this simulation\nWe search for geometry of lattice at given conditions.",
           "imageUrl": "ano2_files/ano2atomify.png",
-          "inputScript": "EAM_defect.lmpin",
+          "inputScript": "EAM_defect.in",
           "keywords": [
               "lattice",
               "cubic"
@@ -44,7 +44,7 @@
           ],
           "files": [
               {
-                  "fileName": "EAM_defect.lmpin",
+                  "fileName": "EAM_defect.in",
                   "url": "ano2_files/EAM_defect.in"
               },
               {
