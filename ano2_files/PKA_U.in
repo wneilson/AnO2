@@ -84,7 +84,11 @@ thermo_style custom step time temp c_Tbath ke pe etotal c_msd[4] c_ndisp c_maxdi
 fix metrics all ave/time 10 1 10 c_msd[4] c_ndisp c_maxdisp v_KEPKA file pka_metrics.dat
 dump traj all custom 20 pka_trajectory.lammpstrj id type x y z vx vy vz c_disp[4]
 dump_modify traj sort id
+fix pkaout all print 20 "$(step),$(time),$(c_msd[4]),$(v_ndamage),$(v_maxdisp)" file pka_history.csv screen no
+
 run 2000
+
+unfix pkaout
 variable FINAL_ND equal c_ndisp
 variable FINAL_MSD equal c_msd[4]
 variable FINAL_MAX equal c_maxdisp
