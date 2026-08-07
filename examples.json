@@ -56,6 +56,38 @@
                   "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"
               }
           ]
+    },
+    {
+      "id": "UO2_PKA_O",
+      "title": "Radiation damage: oxygen PKA",
+      "description": "Launch an oxygen primary knock-on atom and measure transient and residual lattice damage.",
+      "analysisDescription": "# Radiation damage from one recoil\nChange the PKA energy and crystallographic direction. Compare MSD, peak displacement, and the number of atoms that remain displaced after the event.",
+      "imageUrl": "ano2_files/ano2atomify.png",
+      "inputScript": "PKA_O.in",
+      "keywords": ["radiation", "PKA", "UO2", "defects", "MSD"],
+      "files": [
+        {"fileName": "PKA_O.in", "url": "ano2_files/PKA_O.in"},
+        {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
+        {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
+        {"fileName": "description_pka.md", "url": "ano2_files/description_pka.md"},
+        {"fileName": "analyze_pka.ipynb", "url": "ano2_files/analyze_pka.ipynb"}
+      ]
+    },
+    {
+      "id": "UO2_PKA_U",
+      "title": "Radiation damage: uranium PKA",
+      "description": "Compare a heavy uranium recoil with the oxygen-PKA experiment.",
+      "analysisDescription": "# Species effect\nRun the same recoil directions for a uranium PKA and compare energy transfer and residual damage with oxygen.",
+      "imageUrl": "ano2_files/ano2atomify.png",
+      "inputScript": "PKA_U.in",
+      "keywords": ["radiation", "PKA", "UO2", "uranium", "defects"],
+      "files": [
+        {"fileName": "PKA_U.in", "url": "ano2_files/PKA_U.in"},
+        {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
+        {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
+        {"fileName": "analyze_pka.ipynb", "url": "ano2_files/analyze_pka.ipynb"}
+      ]
     }
   ]
 }
+
