@@ -40,6 +40,7 @@ min_style cg
 min_modify line quadratic dmax 0.05
 thermo 25
 thermo_style custom step temp press pe etotal lx ly lz
+min_style cg/kk
 minimize 1.0e-8 1.0e-10 2000 10000
 unfix relax
 replicate 4 4 4
