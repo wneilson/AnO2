@@ -81,20 +81,27 @@ fix integrate all nve
 variable KEPKA equal ke(pka)
 thermo 40
 thermo_style custom step time temp c_Tbath ke pe etotal c_msd[4] c_ndisp c_maxdisp v_KEPKA
+
+# Columns in pka_metrics.dat:
+# timestep, MSD_A2, displaced_atom_count, max_displacement_A, PKA_KE_eV
 fix metrics all ave/time 10 1 10 c_msd[4] c_ndisp c_maxdisp v_KEPKA file pka_metrics.dat
+
 dump traj all custom 20 pka_trajectory.lammpstrj id type x y z vx vy vz c_disp[4]
 dump_modify traj sort id
-fix pkaout all print 20 "$(step),$(time),$(c_msd[4]),$(v_ndamage),$(v_maxdisp)" file pka_history.csv screen no
+
+fix pkaout all print 20 "$(step),$(time),$(c_msd[4]),$(c_ndisp),$(c_maxdisp)" file pka_history.csv screen no
 
 run 2000
 
 unfix pkaout
+
 variable FINAL_ND equal c_ndisp
 variable FINAL_MSD equal c_msd[4]
 variable FINAL_MAX equal c_maxdisp
-print "=== PKA SIMULATION COMPLETE ===" screen yes
 
+print "=== PKA SIMULATION COMPLETE ===" screen yes
 print "RESULT: EPKA=${EPKA} residual_displaced=${FINAL_ND} final_MSD_A2=${FINAL_MSD} max_displacement_A=${FINAL_MAX}" append pka_results.txt screen yes
+
 unfix metrics
 unfix integrate
 undump traj
