@@ -1,6 +1,6 @@
 #/atom 1 oxygen
 #/atom 2 uranium
-#/atom 3 fluorine
+#/atom 3 cesium
 # Project: low-energy primary knock-on atom (PKA) in UO2
 # Atomify/LAMMPS.  Type 1 = O, type 2 = U in AnO2-single_cell.lmpstruct.
 
