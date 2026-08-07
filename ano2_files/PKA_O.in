@@ -121,7 +121,10 @@ run 2000                    # 0.50 ps of post-PKA dynamics
 variable FINAL_ND equal c_ndisp
 variable FINAL_MSD equal c_msd[4]
 variable FINAL_MAX equal c_maxdisp
-print "RESULT: residual_displaced=${FINAL_ND} final_MSD_A2=${FINAL_MSD} max_displacement_A=${FINAL_MAX}"
+print "=== PKA SIMULATION COMPLETE ===" screen yes
+
+print "RESULT: EPKA=${EPKA} residual_displaced=${FINAL_ND} final_MSD_A2=${FINAL_MSD} max_displacement_A=${FINAL_MAX}" \
+      append pka_results.txt screen yes
 
 unfix metrics
 unfix integrate
