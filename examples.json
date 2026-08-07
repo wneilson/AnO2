@@ -69,8 +69,8 @@
         {"fileName": "PKA_O.in", "url": "ano2_files/PKA_O.in"},
         {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
         {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
-        {"fileName": "description_pka.md", "url": "ano2_files/description_pka.md"},
-        {"fileName": "analyze_pka.ipynb", "url": "ano2_files/analyze_pka.ipynb"}
+        {"fileName": "description_pka.md", "url": "description_pka.md"},
+        {"fileName": "analyze_pka.ipynb", "url": "notebooks/analyze_pka.ipynb"}
       ]
     },
     {
@@ -85,7 +85,7 @@
         {"fileName": "PKA_U.in", "url": "ano2_files/PKA_U.in"},
         {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
         {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
-        {"fileName": "analyze_pka.ipynb", "url": "ano2_files/analyze_pka.ipynb"}
+        {"fileName": "analyze_pka.ipynb", "url": "notebooks/analyze_pka.ipynb"}
       ]
     }
   ]
