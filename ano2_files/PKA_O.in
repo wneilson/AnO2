@@ -116,7 +116,11 @@ fix metrics all ave/time 10 1 10 c_msd[4] c_ndisp c_maxdisp v_KEPKA file pka_met
 dump traj all custom 20 pka_trajectory.lammpstrj id type x y z vx vy vz c_disp[4]
 dump_modify traj sort id
 
-run 2000                    # 0.50 ps of post-PKA dynamics
+fix pkaout all print 20 "$(step),$(time),$(c_msd[4]),$(v_ndamage),$(v_maxdisp)" file pka_history.csv screen no
+
+run 2000
+
+unfix pkaout
 
 variable FINAL_ND equal c_ndisp
 variable FINAL_MSD equal c_msd[4]
