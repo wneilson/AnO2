@@ -1,0 +1,127 @@
+#/atom 1 oxygen
+#/atom 2 uranium
+# Teaching project: low-energy primary knock-on atom (PKA) in UO2
+# Atomify/LAMMPS.  Type 1 = O, type 2 = U in AnO2-single_cell.lmpstruct.
+
+boundary p p p
+atom_style full
+units metal
+
+# ================================================================
+# STUDENT CONTROLS -- change these first
+# ================================================================
+variable EPKA equal 50.0       # PKA kinetic energy in eV
+variable DX   equal 1.0        # direction x component
+variable DY   equal 1.0        # direction y component
+variable DZ   equal 0.0        # direction z component
+variable DCUT equal 1.0        # displaced-atom threshold in Angstrom
+variable TEMP equal 300.0      # initial temperature in K
+# ================================================================
+
+# Start from the same fluorite cell and potential as the AnO2 examples.
+read_data AnO2-single_cell.lmpstruct
+variable O equal 1
+variable U equal 2
+set type ${O} charge -1.1104
+set type ${U} charge  2.2208
+
+kspace_style pppm 1.0e-5
+variable SR_CUTOFF equal 11.0
+pair_style hybrid/overlay coul/long ${SR_CUTOFF} eam/alloy
+pair_coeff * * coul/long
+pair_coeff * * eam/alloy CeThUNpPuAmCmO.eam.alloy O U
+neighbor 2.0 bin
+neigh_modify delay 0 every 1 check yes
+
+# Relax one unit cell, including its dimensions, then make a 4x4x4 cell.
+# 12 atoms/cell -> 768 atoms total: intentionally small enough for a browser.
+fix relax all box/relax aniso 0.0 vmax 0.001
+min_style cg
+min_modify line quadratic dmax 0.05
+thermo 25
+thermo_style custom step temp press pe etotal lx ly lz
+minimize 1.0e-8 1.0e-10 2000 10000
+unfix relax
+replicate 4 4 4
+
+# Pick one oxygen near the center.  Oxygen sites in fluorite occur at
+# fractional coordinates (..., 0.4375, 0.5625, ...) in a 4x4x4 replication.
+variable XP equal xlo+0.4375*lx
+variable YP equal ylo+0.4375*ly
+variable ZP equal zlo+0.4375*lz
+region pka_site sphere ${XP} ${YP} ${ZP} 0.35 units box
+group oxygen type ${O}
+group near_pka region pka_site
+group pka intersect oxygen near_pka
+group bath subtract all pka
+
+variable NPKA equal count(pka)
+print "PKA_CHECK: selected ${NPKA} atom (expected 1)"
+
+# Brief thermal equilibration.  This is intentionally short for Atomify.
+velocity all create ${TEMP} 160278 mom yes rot no dist gaussian
+reset_timestep 0
+timestep 0.001             # 1 fs during gentle thermal equilibration
+fix equil all nvt temp ${TEMP} ${TEMP} 0.1
+thermo 100
+run 250                    # 0.25 ps
+unfix equil
+
+# Remove any whole-cell drift before the recoil is added.
+velocity all zero linear
+
+# Radiation-damage diagnostics.  Reference positions are the equilibrated
+# positions immediately before the PKA receives its extra kinetic energy.
+compute disp all displace/atom
+compute msd all msd com yes
+variable isdisp atom "c_disp[4] > v_DCUT"
+compute ndisp all reduce sum v_isdisp
+compute maxdisp all reduce max c_disp[4]
+compute Tbath bath temp
+
+# Convert E_PKA [eV] to speed [Angstrom/ps].  For LAMMPS metal units,
+# KE = 0.5*m*v^2*MVV2E with MVV2E = 1.0364269e-4.
+# Since pka contains one atom, mass(pka) is that atom's mass in g/mol.
+variable MVV2E equal 1.0364269e-4
+variable MPKA equal mass(pka)
+variable DNORM equal sqrt(v_DX*v_DX+v_DY*v_DY+v_DZ*v_DZ)
+variable VMAG equal sqrt(2.0*v_EPKA/(v_MPKA*v_MVV2E))
+variable VX equal v_VMAG*v_DX/v_DNORM
+variable VY equal v_VMAG*v_DY/v_DNORM
+variable VZ equal v_VMAG*v_DZ/v_DNORM
+
+print "PKA_SETUP: oxygen, E=${EPKA} eV, direction=(${DX},${DY},${DZ})"
+print "PKA_SETUP: mass=${MPKA} g/mol, recoil speed=${VMAG} Angstrom/ps"
+
+# Add recoil to the PKA's thermal velocity rather than replacing it.
+velocity pka set v_VX v_VY v_VZ sum yes units box
+
+# Ballistic/cascade segment: microcanonical dynamics.  Do NOT thermostat the
+# whole crystal here; that would artificially remove the recoil energy.
+# 0.25 fs is deliberately conservative for low-energy teaching cascades.
+reset_timestep 0
+timestep 0.00025
+fix integrate all nve
+
+variable KEPKA equal ke(pka)
+
+thermo 40
+thermo_style custom step time temp c_Tbath ke pe etotal c_msd[4] c_ndisp c_maxdisp v_KEPKA
+
+# Columns in pka_metrics.dat:
+# timestep, MSD_A2, displaced_atom_count, max_displacement_A, PKA_KE_eV
+fix metrics all ave/time 10 1 10 c_msd[4] c_ndisp c_maxdisp v_KEPKA file pka_metrics.dat
+
+dump traj all custom 20 pka_trajectory.lammpstrj id type x y z vx vy vz c_disp[4]
+dump_modify traj sort id
+
+run 2000                    # 0.50 ps of post-PKA dynamics
+
+variable FINAL_ND equal c_ndisp
+variable FINAL_MSD equal c_msd[4]
+variable FINAL_MAX equal c_maxdisp
+print "RESULT: residual_displaced=${FINAL_ND} final_MSD_A2=${FINAL_MSD} max_displacement_A=${FINAL_MAX}"
+
+unfix metrics
+unfix integrate
+undump traj

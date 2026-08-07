@@ -1,0 +1,93 @@
+#/atom 1 oxygen
+#/atom 2 uranium
+# Extension: uranium PKA in UO2.  Same design as PKA_O.in.
+
+boundary p p p
+atom_style full
+units metal
+
+variable EPKA equal 100.0
+variable DX   equal 1.0
+variable DY   equal 1.0
+variable DZ   equal 0.0
+variable DCUT equal 1.0
+variable TEMP equal 300.0
+
+read_data AnO2-single_cell.lmpstruct
+variable O equal 1
+variable U equal 2
+set type ${O} charge -1.1104
+set type ${U} charge  2.2208
+kspace_style pppm 1.0e-5
+variable SR_CUTOFF equal 11.0
+pair_style hybrid/overlay coul/long ${SR_CUTOFF} eam/alloy
+pair_coeff * * coul/long
+pair_coeff * * eam/alloy CeThUNpPuAmCmO.eam.alloy O U
+neighbor 2.0 bin
+neigh_modify delay 0 every 1 check yes
+
+fix relax all box/relax aniso 0.0 vmax 0.001
+min_style cg
+min_modify line quadratic dmax 0.05
+thermo 25
+thermo_style custom step temp press pe etotal lx ly lz
+minimize 1.0e-8 1.0e-10 2000 10000
+unfix relax
+replicate 4 4 4
+
+# A uranium lattice site lies exactly at the center of this replication.
+variable XP equal xlo+0.5*lx
+variable YP equal ylo+0.5*ly
+variable ZP equal zlo+0.5*lz
+region pka_site sphere ${XP} ${YP} ${ZP} 0.35 units box
+group uranium type ${U}
+group near_pka region pka_site
+group pka intersect uranium near_pka
+group bath subtract all pka
+variable NPKA equal count(pka)
+print "PKA_CHECK: selected ${NPKA} atom (expected 1)"
+
+velocity all create ${TEMP} 160278 mom yes rot no dist gaussian
+reset_timestep 0
+timestep 0.001
+fix equil all nvt temp ${TEMP} ${TEMP} 0.1
+thermo 100
+run 250
+unfix equil
+velocity all zero linear
+
+compute disp all displace/atom
+compute msd all msd com yes
+variable isdisp atom "c_disp[4] > v_DCUT"
+compute ndisp all reduce sum v_isdisp
+compute maxdisp all reduce max c_disp[4]
+compute Tbath bath temp
+
+variable MVV2E equal 1.0364269e-4
+variable MPKA equal mass(pka)
+variable DNORM equal sqrt(v_DX*v_DX+v_DY*v_DY+v_DZ*v_DZ)
+variable VMAG equal sqrt(2.0*v_EPKA/(v_MPKA*v_MVV2E))
+variable VX equal v_VMAG*v_DX/v_DNORM
+variable VY equal v_VMAG*v_DY/v_DNORM
+variable VZ equal v_VMAG*v_DZ/v_DNORM
+print "PKA_SETUP: uranium, E=${EPKA} eV, direction=(${DX},${DY},${DZ})"
+print "PKA_SETUP: mass=${MPKA} g/mol, recoil speed=${VMAG} Angstrom/ps"
+velocity pka set v_VX v_VY v_VZ sum yes units box
+
+reset_timestep 0
+timestep 0.00025
+fix integrate all nve
+variable KEPKA equal ke(pka)
+thermo 40
+thermo_style custom step time temp c_Tbath ke pe etotal c_msd[4] c_ndisp c_maxdisp v_KEPKA
+fix metrics all ave/time 10 1 10 c_msd[4] c_ndisp c_maxdisp v_KEPKA file pka_metrics.dat
+dump traj all custom 20 pka_trajectory.lammpstrj id type x y z vx vy vz c_disp[4]
+dump_modify traj sort id
+run 2000
+variable FINAL_ND equal c_ndisp
+variable FINAL_MSD equal c_msd[4]
+variable FINAL_MAX equal c_maxdisp
+print "RESULT: residual_displaced=${FINAL_ND} final_MSD_A2=${FINAL_MSD} max_displacement_A=${FINAL_MAX}"
+unfix metrics
+unfix integrate
+undump traj
