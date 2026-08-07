@@ -1,6 +1,7 @@
 #/atom 1 oxygen
 #/atom 2 uranium
-# Teaching project: low-energy primary knock-on atom (PKA) in UO2
+#/atom 3 fluorine
+# Project: low-energy primary knock-on atom (PKA) in UO2
 # Atomify/LAMMPS.  Type 1 = O, type 2 = U in AnO2-single_cell.lmpstruct.
 
 boundary p p p
@@ -8,7 +9,7 @@ atom_style full
 units metal
 
 # ================================================================
-# STUDENT CONTROLS -- change these first
+# CONTROLS -- change these first
 # ================================================================
 variable EPKA equal 50.0       # PKA kinetic energy in eV
 variable DX   equal 1.0        # direction x component
@@ -18,10 +19,12 @@ variable DCUT equal 1.0        # displaced-atom threshold in Angstrom
 variable TEMP equal 300.0      # initial temperature in K
 # ================================================================
 
-# Start from the same fluorite cell and potential as the AnO2 examples.
-read_data AnO2-single_cell.lmpstruct
+# Start from the fluorite cell .
+read_data AnO2-single_cell.lmpstruct extra/atom/types 1
 variable O equal 1
 variable U equal 2
+variable PKA_TYPE equal 3
+
 set type ${O} charge -1.1104
 set type ${U} charge  2.2208
 
@@ -29,12 +32,12 @@ kspace_style pppm 1.0e-5
 variable SR_CUTOFF equal 11.0
 pair_style hybrid/overlay coul/long ${SR_CUTOFF} eam/alloy
 pair_coeff * * coul/long
-pair_coeff * * eam/alloy CeThUNpPuAmCmO.eam.alloy O U
+pair_coeff * * eam/alloy CeThUNpPuAmCmO.eam.alloy O U O
 neighbor 2.0 bin
 neigh_modify delay 0 every 1 check yes
 
 # Relax one unit cell, including its dimensions, then make a 4x4x4 cell.
-# 12 atoms/cell -> 768 atoms total: intentionally small enough for a browser.
+# 12 atoms/cell -> 768 atoms total.
 fix relax all box/relax aniso 0.0 vmax 0.001
 min_style cg
 min_modify line quadratic dmax 0.05
@@ -54,10 +57,16 @@ region pka_site sphere ${XP} ${YP} ${ZP} 0.35 units box
 group oxygen type ${O}
 group near_pka region pka_site
 group pka intersect oxygen near_pka
-group bath subtract all pka
 
 variable NPKA equal count(pka)
 print "PKA_CHECK: selected ${NPKA} atom (expected 1)"
+
+# Turn the selected oxygen into visualization type 3.
+# Physically, type 3 still maps to O in pair_coeff above.
+set group pka type ${PKA_TYPE}
+set type ${PKA_TYPE} charge -1.1104
+
+group bath subtract all pka
 
 # Brief thermal equilibration.  This is intentionally short for Atomify.
 velocity all create ${TEMP} 160278 mom yes rot no dist gaussian
@@ -91,8 +100,9 @@ variable VX equal v_VMAG*v_DX/v_DNORM
 variable VY equal v_VMAG*v_DY/v_DNORM
 variable VZ equal v_VMAG*v_DZ/v_DNORM
 
-print "PKA_SETUP: oxygen, E=${EPKA} eV, direction=(${DX},${DY},${DZ})"
+print "PKA_SETUP: highlighted oxygen PKA, E=${EPKA} eV, direction=(${DX},${DY},${DZ})"
 print "PKA_SETUP: mass=${MPKA} g/mol, recoil speed=${VMAG} Angstrom/ps"
+print "PKA_VISUAL: PKA is type 3 (displayed using fluorine color, physically mapped to oxygen)"
 
 # Add recoil to the PKA's thermal velocity rather than replacing it.
 velocity pka set v_VX v_VY v_VZ sum yes units box
