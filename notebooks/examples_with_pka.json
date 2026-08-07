@@ -1,0 +1,66 @@
+{
+  "baseUrl": "https://raw.githubusercontent.com/wneilson/AnO2/main",
+  "title": "AnO2 computational materials science",
+  "descriptionFile": "description.md",
+  "examples": [
+    {
+      "id": "AnO2",
+      "title": "AnO2 lattice relaxation",
+      "description": "Geometry relaxation of the lattice at given conditions.",
+      "analysisDescription": "# About this simulation\nWe search for the equilibrium lattice geometry at specified conditions.",
+      "imageUrl": "ano2_files/ano2atomify.png",
+      "inputScript": "EAM_equil_avg.in",
+      "keywords": ["lattice", "cubic"],
+      "files": [
+        {"fileName": "EAM_equil_avg.in", "url": "ano2_files/EAM_equil_avg.in"},
+        {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
+        {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"}
+      ]
+    },
+    {
+      "id": "AnO2_supercell",
+      "title": "AnO2 supercell",
+      "description": "Supercell enabling calculation of defect energies.",
+      "analysisDescription": "# About this simulation\nBuild and relax a supercell for point-defect calculations.",
+      "imageUrl": "ano2_files/ano2atomify.png",
+      "inputScript": "EAM_defect.in",
+      "keywords": ["lattice", "cubic", "defects"],
+      "files": [
+        {"fileName": "EAM_defect.in", "url": "ano2_files/EAM_defect.in"},
+        {"fileName": "AnO2-supercell.lmpstruct", "url": "ano2_files/AnO2-supercell.lmpstruct"},
+        {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"}
+      ]
+    },
+    {
+      "id": "UO2_PKA_O",
+      "title": "Radiation damage: oxygen PKA",
+      "description": "Launch an oxygen primary knock-on atom and measure transient and residual lattice damage.",
+      "analysisDescription": "# Radiation damage from one recoil\nChange the PKA energy and crystallographic direction. Compare MSD, peak displacement, and the number of atoms that remain displaced after the event.",
+      "imageUrl": "ano2_files/ano2atomify.png",
+      "inputScript": "PKA_O.in",
+      "keywords": ["radiation", "PKA", "UO2", "defects", "MSD"],
+      "files": [
+        {"fileName": "PKA_O.in", "url": "ano2_files/PKA_O.in"},
+        {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
+        {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
+        {"fileName": "description_pka.md", "url": "ano2_files/description_pka.md"},
+        {"fileName": "analyze_pka.ipynb", "url": "ano2_files/analyze_pka.ipynb"}
+      ]
+    },
+    {
+      "id": "UO2_PKA_U",
+      "title": "Radiation damage: uranium PKA",
+      "description": "Compare a heavy uranium recoil with the oxygen-PKA experiment.",
+      "analysisDescription": "# Species effect\nRun the same recoil directions for a uranium PKA and compare energy transfer and residual damage with oxygen.",
+      "imageUrl": "ano2_files/ano2atomify.png",
+      "inputScript": "PKA_U.in",
+      "keywords": ["radiation", "PKA", "UO2", "uranium", "defects"],
+      "files": [
+        {"fileName": "PKA_U.in", "url": "ano2_files/PKA_U.in"},
+        {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
+        {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
+        {"fileName": "analyze_pka.ipynb", "url": "ano2_files/analyze_pka.ipynb"}
+      ]
+    }
+  ]
+}
