@@ -70,7 +70,7 @@
         {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
         {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
         {"fileName": "description_pka.md", "url": "description_pka.md"},
-        {"fileName": "PKA_radiation_damage_analysis.ipynb", "url": "notebooks/PKA_radiation_damage_analysis.ipynb"}
+        {"fileName": "UO2_PKA_Radiation_Damage_Lab.xlsx", "url": "notebooks/UO2_PKA_Radiation_Damage_Lab.xlsx"}
       ]
     },
     {
@@ -85,7 +85,7 @@
         {"fileName": "PKA_U.in", "url": "ano2_files/PKA_U.in"},
         {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
         {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
-        {"fileName": "PKA_radiation_damage_analysis.ipynb", "url": "notebooks/PKA_radiation_damage_analysis.ipynb"}
+        {"fileName": "UO2_PKA_Radiation_Damage_Lab.xlsx", "url": "notebooks/UO2_PKA_Radiation_Damage_Lab.xlsx"}
       ]
     }
   ]
