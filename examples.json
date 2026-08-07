@@ -61,6 +61,7 @@
       "id": "UO2_PKA_O",
       "title": "Radiation damage: oxygen PKA",
       "description": "Launch an oxygen primary knock-on atom and measure transient and residual lattice damage.",
+      "analysisScript": "PKA_radiation_damage_analysis.ipynb",
       "analysisDescription": "# Radiation damage from one recoil\nChange the PKA energy and crystallographic direction. Compare MSD, peak displacement, and the number of atoms that remain displaced after the event.",
       "imageUrl": "ano2_files/ano2atomify.png",
       "inputScript": "PKA_O.in",
@@ -70,7 +71,7 @@
         {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
         {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
         {"fileName": "description_pka.md", "url": "description_pka.md"},
-        {"fileName": "analyze_pka.ipynb", "url": "notebooks/analyze_pka.ipynb"}
+        {"fileName": "PKA_radiation_damage_analysis.ipynb", "url": "notebooks/PKA_radiation_damage_analysis.ipynb"}
       ]
     },
     {
@@ -85,7 +86,7 @@
         {"fileName": "PKA_U.in", "url": "ano2_files/PKA_U.in"},
         {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
         {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
-        {"fileName": "analyze_pka.ipynb", "url": "notebooks/analyze_pka.ipynb"}
+        {"fileName": "PKA_radiation_damage_analysis.ipynb", "url": "notebooks/PKA_radiation_damage_analysis.ipynb"}
       ]
     }
   ]
