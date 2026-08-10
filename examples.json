@@ -68,9 +68,7 @@
       "files": [
         {"fileName": "PKA_O.in", "url": "ano2_files/PKA_O.in"},
         {"fileName": "AnO2-single_cell.lmpstruct", "url": "ano2_files/AnO2-single_cell.lmpstruct"},
-        {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"},
-        {"fileName": "description_pka.md", "url": "description_pka.md"},
-        {"fileName": "UO2_PKA_Radiation_Damage_Lab.xlsx", "url": "notebooks/UO2_PKA_Radiation_Damage_Lab.xlsx"}
+        {"fileName": "CeThUNpPuAmCmO.eam.alloy", "url": "ano2_files/CeThUNpPuAmCmO.eam.alloy"}
       ]
     },
     {
